@@ -1,0 +1,26 @@
+docker分兩部分
+web & redis
+
+http://redis:port 可訪問到redis (可能是 redis name能被web的設定解析，不知怎解的-docker-compose設定 or app.py初始時設定好的 ?)
+
+聽說要deserialize ，一開始以為是用redis攻擊 flask or sql or 直接汙染header和body看urllib能不能出現甚麼解析異常，我錯了
+因為session沒設定security_key 以為是 attack redis->flask session，對自己的session deserialize，結果發現session是以id的形式存在
+但從app.py就可知，
+
+"""
+app = Flask(__name__)
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = Redis(
+    host='redis',
+    port=6379
+)
+Session(app)
+"""
+這個地方 session 存在redis中，
+爬文後
+https://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html
+https://m3lon.github.io/2018/04/12/%E6%B5%85%E6%9E%90python-unpickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/
+得到payload
+從payload反覆失敗的過程中，觀察到一個現象，session讀取的方式似乎是 user_config = unpickle(session) -> session = pickle(user_config)
+一開始以為每次設好session，進入網頁就被重設，觀察後不是，因為ignore還是存在，只是ignore後面變短變不一樣了，猜測是因為上述行為 pickle解開後重設了ignore的key。
+一個雷區，對redis設定時 " \" "要改成 " \x22 "
