@@ -8,4 +8,6 @@ dump section : readelf -S 'filename' <br>
 only dump library got : objdump -R 'filename' <br>
 disasm binary : objdump -d 'filename' <br>
 check protect : checksec 'filename' <br>
+rop gadget : ROPgadget --binary 'filename' [ --only "pop|ret" ]  <br>
+file : file 'filename' <br>
 <br>
