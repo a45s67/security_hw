@@ -2,7 +2,7 @@
 修computer security的一個紀錄
 
 <br>
-pwn - cheatsheet
+pwn - cheatsheet <br>
 <br>
 dump section : readelf -S 'filename' <br>
 only dump library got : objdump -R 'filename' <br>
