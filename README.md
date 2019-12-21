@@ -14,12 +14,15 @@ file : file 'filename' <br>
 
 pwntools
 
-l = ELF("./libc")
+l = ELF("./libc") <br>
 func addr : l.sym.system  or l.sym.__malloc_hook <br>
-find str addr : l.search("/bin/sh").next()
+find str addr : l.search("/bin/sh").next() <br>
 
-p = process("./binary") or remote("pwnaddr.url",port)
-p.sendafter("recv str", payload)
+p = process("./binary") or remote("pwnaddr.url",port) <br>
+p.sendafter("recv str", payload) <br>
 
-for leak libc: u64(p.recv(6)+"\0\0")
-              (sometimes need p.recvlines(line_num)) or p.recvuntil("recv_str") to align to leak addr )
+for leak libc: u64(p.recv(6)+"\0\0") <br>
+              (sometimes need p.recvlines(line_num)) or p.recvuntil("recv_str") to align to leak addr ) <br>
+              
+trick : find one_gadget from libc 
+        one_gadget after double free
