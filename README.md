@@ -24,5 +24,5 @@ p.sendafter("recv str", payload) <br>
 for leak libc: u64(p.recv(6)+"\0\0") <br>
               (sometimes need p.recvlines(line_num)) or p.recvuntil("recv_str") to align to leak addr ) <br>
               
-trick : find one_gadget from libc 
-        one_gadget after double free
+trick : find one_gadget from libc  <br>
+        one_gadget after double free <br>
