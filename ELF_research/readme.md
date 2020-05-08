@@ -1,11 +1,11 @@
-#藉由更改ELF，達到控制程式流程，執行注入shellcode的心得整理
+*藉由更改ELF，達到控制程式流程，執行注入shellcode的心得整理
 
-#Intorduction:
+*Intorduction:
 
 reference: [IOT malware in NTUST]
 上完課後的動手做以及測試
 
-#常用工具
+*常用工具
 GDB ,
 readelf -a,
 objdump -d -M intel
